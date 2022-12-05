@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">  
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    <style>
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  min-height: 100vh;
+  background: #5372F0;
+}
+.uu{
+    display:flex;
+    list-style:none;
+    padding:12px 15px;
+    align-items:center;
+    justify-content: space-between;
+}
+.dog{
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.com button{
+  width: 100%;
+  padding: 14px;
+  outline: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 17px;
+  border-radius: 5px;
+  background: #5372F0;
+}
+.uu.symbols{
+    width:50px;
+    color: #9f9f9f;
+    font-size:14px;
+    cursor:pointer;
+}
+
+.com{
+  max-width: 690px;
+  width: 100%;
+  padding: 30px;
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.01);
+}
+.home{
+    display:flex;
+    border-bottom: 1px solid #bbb;
+}
+.dog.home{
+    border-radius: 0px;
+    border-left: 1px solid #ccc;
+}
+.home textarea{
+  height:350px;
+  width:100%;
+  border: none;
+  resize: none;
+  background: none;
+  font-size: 18px;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+.home .translattext{
+    border-radius:0px;
+    border-left: 1px solid #bbb;
+}
+.exchange{
+    align-items:center;
+    margin-left:2px ;
+    position:center;
+
+}
+
+
+
+</style>
+
+  </head>
+  <body>
+<div class="com">
+    <div class="dog">
+        <div class="home">
+            <textarea class="giventext"  placeholder="Enter text" ></textarea>
+            <textarea class="translattext" placeholder="Translation"  disabled></textarea>
+        </div>
+        <div class="uu">
+            <div class="first from">
+                <select></select>
+               <div class="symbols">
+                    <i id="from" class="fas fa-volume-up"></i>
+                    <i id="from" class="fas fa-copy"></i>
+                </div>
+            </div>
+            <li class="exchange"><i class="fas fa-exchange-alt"></i></li>
+            <div class="first to">
+                <select></select>
+                <div class="symbols">
+                    <i id="to" class="fas fa-volume-up"></i>
+                    <i id="to" class="fas fa-copy"></i>
+                </div>
+            </div>
+            </div>
+        </div>
+            <button>Translate Text</button>
+
+</div>
+    
+  </body>
+  <script>
+    let countries = {
+    "am-ET": "Amharic",
+    "ar-SA": "Arabic",
+    "be-BY": "Bielarus",
+    "bem-ZM": "Bemba",
+    "bi-VU": "Bislama",
+    "bjs-BB": "Bajan",
+    "bn-IN": "Bengali",
+    "bo-CN": "Tibetan",
+    "br-FR": "Breton",
+    "bs-BA": "Bosnian",
+    "ca-ES": "Catalan",
+    "cop-EG": "Coptic",
+    "cs-CZ": "Czech",
+    "cy-GB": "Welsh",
+    "da-DK": "Danish",
+    "dz-BT": "Dzongkha",
+    "de-DE": "German",
+    "dv-MV": "Maldivian",
+    "el-GR": "Greek",
+    "en-GB": "English",
+    "es-ES": "Spanish",
+    "et-EE": "Estonian",
+    "eu-ES": "Basque",
+    "fa-IR": "Persian",
+    "fi-FI": "Finnish",
+    "fn-FNG": "Fanagalo",
+    "fo-FO": "Faroese",
+    "fr-FR": "French",
+    "gl-ES": "Galician",
+    "gu-IN": "Gujarati",
+    "ha-NE": "Hausa",
+    "he-IL": "Hebrew",
+    "hi-IN": "Hindi",
+    "hr-HR": "Croatian",
+    "hu-HU": "Hungarian",
+    "id-ID": "Indonesian",
+    "is-IS": "Icelandic",
+    "it-IT": "Italian",
+    "ja-JP": "Japanese",
+    "kk-KZ": "Kazakh",
+    "km-KM": "Khmer",
+    "kn-IN": "Kannada",
+    "ko-KR": "Korean",
+    "ku-TR": "Kurdish",
+    "ky-KG": "Kyrgyz",
+    "la-VA": "Latin",
+    "lo-LA": "Lao",
+    "lv-LV": "Latvian",
+    "men-SL": "Mende",
+    "mg-MG": "Malagasy",
+    "mi-NZ": "Maori",
+    "ms-MY": "Malay",
+    "mt-MT": "Maltese",
+    "my-MM": "Burmese",
+    "ne-NP": "Nepali",
+    "niu-NU": "Niuean",
+    "nl-NL": "Dutch",
+    "no-NO": "Norwegian",
+    "ny-MW": "Nyanja",
+    "ur-PK": "Pakistani",
+    "pau-PW": "Palauan",
+    "pa-IN": "Panjabi",
+    "ps-PK": "Pashto",
+    "pis-SB": "Pijin",
+    "pl-PL": "Polish",
+    "pt-PT": "Portuguese",
+    "rn-BI": "Kirundi",
+    "ro-RO": "Romanian",
+    "ru-RU": "Russian",
+    "sg-CF": "Sango",
+    "si-LK": "Sinhala",
+    "sk-SK": "Slovak",
+    "sm-WS": "Samoan",
+    "sn-ZW": "Shona",
+    "so-SO": "Somali",
+    "sq-AL": "Albanian",
+    "sr-RS": "Serbian",
+    "sv-SE": "Swedish",
+    "sw-SZ": "Swahili",
+    "ta-LK": "Tamil",
+    "te-IN": "Telugu",
+    "tet-TL": "Tetum",
+    "tg-TJ": "Tajik",
+    "th-TH": "Thai",
+    "ti-TI": "Tigrinya",
+    "tk-TM": "Turkmen",
+    "tl-PH": "Tagalog",
+    "tn-BW": "Tswana",
+    "to-TO": "Tongan",
+    "tr-TR": "Turkish",
+    "uk-UA": "Ukrainian",
+    "uz-UZ": "Uzbek",
+    "vi-VN": "Vietnamese",
+    "wo-SN": "Wolof",
+    "xh-ZA": "Xhosa",
+    "yi-YD": "Yiddish",
+    "zu-ZA": "Zulu"
+}
+  </script>
+<script>
+  const giventext = document.querySelector(".giventext"),
+  translattext= document.querySelector(".translattext"),
+  exchageIcon = document.querySelector(".exchange"),
+  selectTag = document.querySelectorAll("select"),
+  icons = document.querySelectorAll(".first i");
+  translateBtn = document.querySelector("button"),
+  selectTag.forEach((tag, id) => {
+      for (let country_code in countries) {
+          let selected = id == 0 ? country_code == "en-GB" ? "selected" : "" : country_code == "hi-IN" ? "selected" : "";
+          let option = `<option ${selected} value="${country_code}">${countries[country_code]}</option>`;
+          tag.insertAdjacentHTML("beforeend", option);
+      }
+  });
+  exchageIcon.addEventListener("click", () => {
+      let tempText = giventext.value,
+      tempLang = selectTag[0].value;
+      givenText.value = translattext.value;
+      translattext.value = tempText;
+      selectTag[0].value = selectTag[1].value;
+      selectTag[1].value = tempLang;
+  });
+  giventext.addEventListener("keyup", () => {
+      if(!giventext.value) {
+          translattext.value = "";
+      }
+  });
+  translateBtn.addEventListener("click", () => {
+      let text = giventext.value.trim(),
+      translateFrom = selectTag[0].value,
+      translateTo = selectTag[1].value;
+      if(!text) return;
+      translattext.setAttribute("placeholder", "Translating...");
+      let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
+      fetch(apiUrl).then(res => res.json()).then(data => {
+          translattext.value = data.responseData.translatedText;
+          data.matches.forEach(data => {
+              if(data.id === 0) {
+                  translattext.value = data.translation;
+              }
+          });
+      });
+  });
+  icons.forEach(icon => {
+    icon.addEventListener("click", ({target}) => {
+        if(!giventext.value || !translattext.value) return;
+        if(target.classList.contains("fa-copy")) {
+            if(target.id == "from") {
+                navigator.clipboard.writeText(giventext.value);
+            } else {
+                navigator.clipboard.writeText(translattext.value);
+            }
+        } else {
+            let utterance;
+            if(target.id == "from") {
+                utterance = new SpeechSynthesisUtterance(giventext.value);
+                utterance.lang = selectTag[0].value;
+            } else {
+                utterance = new SpeechSynthesisUtterance(translattext.value);
+                utterance.lang = selectTag[1].value;
+            }
+            speechSynthesis.speak(utterance);
+        }
+    });
+});
+  </script>
+
+  </html>
